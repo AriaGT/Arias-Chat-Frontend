@@ -2,24 +2,6 @@ import styled from "styled-components";
 
 
 export const AppGlobal = styled.div`
-
-  /* RESETS Y FUENTE */
-  @import url(https://fonts.googleapis.com/css?family=Commissioner:100,200,300,regular,500,600,700,800,900);
-  * {
-    margin: 0;
-    padding: 0;
-    outline: none;
-    border: none;
-    text-decoration: none;
-    box-sizing: border-box;
-    font-family: 'Commissioner', sans-serif;
-  }
-  i {
-    font-family: "Font Awesome 6 Free";
-  }
-
-  /* Estilos de la App */
-
   background-color: #333333;
   color: white;
   display: grid;
