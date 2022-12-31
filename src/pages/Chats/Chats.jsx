@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import ChatCard from './ChatCard/ChatCard'
 import { PageContainer } from '../../AppStyles'
-import { useDispatch } from 'react-redux'
-import { getChatsInfo } from '../../store/slices/chatsInfo.slice'
 import axios from 'axios'
 import getConfig from '../../utils/getConfig'
 
@@ -23,8 +21,6 @@ const Chats = ({myChats}) => {
         .catch(err => console.log(err))
     })
   }, [])
-
-  console.log(chatsToShow)
 
   return (
     <PageContainer>

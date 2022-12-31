@@ -18,9 +18,9 @@ function App() {
 
   const dispatch = useDispatch()
 
+  const [counter, setCounter] = useState(0)
   const [modalSelected, setModalSelected] = useState(false)
   const [modalVisibility, setModalVisibility] = useState(false)
-  const [counter, setCounter] = useState(0)
 
   const myChats = useSelector(state => state.chatsInfoSlice)
 
@@ -30,7 +30,6 @@ function App() {
     setTimeout(function(){
       setCounter(counter + 1)
     }, 2000)
-    console.log(counter)
   }, [counter])
 
   return (
