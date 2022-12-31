@@ -17,15 +17,17 @@ const Chat = ({chat}) => {
   console.log(myId)
 
   const submit = data => {
-    const URL = `${API_URL}/conversations/${chat.id}/messages/`
-    axios.post(URL, data, getConfig())
-      .then(res => {
-        reset({
-          message: ""
+    if (data.message) {
+      const URL = `${API_URL}/conversations/${chat.id}/messages/`
+      axios.post(URL, data, getConfig())
+        .then(res => {
+          console.log(res.data)
         })
-        console.log(res.data)
-      })
-      .catch(err => console.log(err))
+        .catch(err => console.log(err))
+    }
+    reset({
+      message: ""
+    })
   }
 
   console.log(chat)
