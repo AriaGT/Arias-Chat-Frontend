@@ -30,8 +30,6 @@ const Chat = ({chat}) => {
     })
   }
 
-  console.log(chat)
-
   return (
     <ChatContainer>
       <header>
