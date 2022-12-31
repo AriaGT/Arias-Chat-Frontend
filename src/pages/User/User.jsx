@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMyUserData } from '../../store/slices/user.slice'
 import getConfig from '../../utils/getConfig'
-import { UserPageContainer } from './styles'
+import { PageContainer } from '../../AppStyles'
 import emptyUserPhoto from '/user-empty-avatar.png'
 
 const API_URL = 'https://api-arias-chat.onrender.com/api/v1'
@@ -93,18 +93,18 @@ const User = ({setModalSelected, setModalVisibility}) => {
   }
 
   return (
-    <UserPageContainer>
+    <PageContainer>
       {
         !isEditing
         ?
-        <section>
+        <div className='user_image_container'>
           <h2>Mi Perfil</h2>
           <img src={myUser.profileImage || emptyUserPhoto} alt="" />
           <div className='user_data'>
-            <h1>Usuario: {myUser.firstName + ' ' + myUser.lastName}</h1>
-            <p>Nombre: {myUser.firstName}</p>
-            <p>Apellido: {myUser.lastName}</p>
-            <p>Número telefónico: {myUser.phone || 'No proporcionado'}</p>
+            <h1>{myUser.firstName + ' ' + myUser.lastName}</h1>
+            <p>Nombre:<br /> {myUser.firstName}</p>
+            <p>Apellido:<br /> {myUser.lastName}</p>
+            <p>Número telefónico:<br /> {myUser.phone || 'No proporcionado'}</p>
             <div className='spacerMedium'></div>
           </div>
           <div className="buttons">
@@ -112,15 +112,15 @@ const User = ({setModalSelected, setModalVisibility}) => {
             <button onClick={goToCloseSession}>Cerrar sesión</button>
             <button className='danger' onClick={goToDeleteAccount}>Eliminar</button>
           </div>
-        </section>
+        </div>
         :
-        <section>
+        <div>
           <form onSubmit={handleSubmit(submit)}>
             <div className='image_edit'>
               <h2>Mi Perfil</h2>
               <label htmlFor="profileImage-input"><img src={myUser.profileImage || emptyUserPhoto} alt="" /></label>
             </div>
-            <h1>Usuario: {myUser.firstName + ' ' + myUser.lastName}</h1>
+            <h1>{myUser.firstName + ' ' + myUser.lastName}</h1>
             <div>
               <label htmlFor="firstName-input">Nombre: </label>
               <input {...register("firstName")} onChange={firstNameInputLengthChange} size={(firstNameWriting) ? firstNameLength : myUser.firstName.length} type='text' id='firstName-input' placeholder={myUser.firstName} />
@@ -138,10 +138,10 @@ const User = ({setModalSelected, setModalVisibility}) => {
           <div className="buttons">
             <button onClick={cancelSubmit}>Cancelar</button>
           </div>
-        </section>
+        </div>
       }
       
-    </UserPageContainer>
+    </PageContainer>
   )
 }
 

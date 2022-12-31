@@ -18,11 +18,7 @@ const ChatCard = ({id, email, firstName, lastName, phone, profileImage}) => {
   return (
     <UserCardContainer onClick={setCreateUserData}>
       <div className="img-container">
-        <div className="img-inner">
-          <div className="inner-skew">
-            <img src={profileImage || emptyUserImage} />
-          </div>
-        </div>
+          <img src={profileImage || emptyUserImage} />
       </div>
       <div className="text-container">
         <h3>{firstName} {lastName}</h3>

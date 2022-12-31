@@ -13,7 +13,6 @@ const Login = ({ setModalVisibility }) => {
   const { register, handleSubmit, reset } = useForm();
 
   const dispatch = useDispatch()
-  const myUser = useSelector(state => state.userSlice)
 
   const submit = data => {
     const URL = `${API_URL}/auth/login`

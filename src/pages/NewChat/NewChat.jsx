@@ -7,7 +7,7 @@ import getConfig from '../../utils/getConfig';
 import { useDispatch, useSelector } from 'react-redux';
 import chatCreate from '/chat-create.png'
 import { setResetInfo } from '../../store/slices/resetInfo.slice';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const API_URL = 'https://api-arias-chat.onrender.com/api/v1'
 
@@ -18,42 +18,34 @@ const NewChat = () => {
 
   const { register, handleSubmit, reset } = useForm();
   const [allUsers, setAllUsers] = useState()
-  const [participantId, setParticipantId] = useState([])
+  const [participantId, setParticipantId] = useState()
 
-  const [photo, setPhoto] = useState(null)
-  const [photoPreview, setPhotoPreview] = useState(null)
+  const [photo, setPhoto] = useState()
+  const [photoPreview, setPhotoPreview] = useState()
   const [isUploading, setIsUploading] = useState(false)
-  const [photoUrl, setPhotoUrl] = useState(undefined)
+  const [photoUrl, setPhotoUrl] = useState()
   const [dataError, setDataError] = useState(false)
 
   const autocompleteData = useSelector(state => state.resetInfoSlice)
 
-  //! Autocompletado
-
-  useEffect(() => {
-    if (autocompleteData) {
-      const participantId = autocompleteData.id
-      reset({participantId})
-    }
-  }, [])
-
-  //! Email Input
-
   useEffect(() => {
     const URL = `${API_URL}/users/`
     axios.get(URL, getConfig())
-      .then(res => {
-        console.log(res.data)
-        setAllUsers(res.data)
-      })
-      .catch(err => console.log(err))
+    .then(res => {
+      setAllUsers(res.data)
+    })
+    .catch(err => console.log(err))
   }, [])
-  
 
+  //! Email Input
+  
   const findUserIdByEmail = (e) => {
     const email = e.target.value
-    setParticipantId(allUsers.filter(user => user.email === email)[0])
+    const user = allUsers.filter(user => user.email === email)[0]
+    user && setParticipantId(user.id)
   }
+  
+  console.log(participantId)
 
   useEffect(() => {
     if (participantId) {
@@ -85,7 +77,7 @@ const NewChat = () => {
       setPhotoUrl(result)
       reset({
         imgUrl: result,
-        participantId: participantId.id || autocompleteData.id
+        participantId: participantId || autocompleteData.id
       })
     } catch (error) {
       console.error(error)
@@ -93,6 +85,40 @@ const NewChat = () => {
   }
 
   //! Buttons
+
+  const submit =  data => {
+    const URL = `${API_URL}/conversations/`
+    console.log(data)
+    if (autocompleteData) {
+      axios.post(URL, {
+        title: data.title,
+        imgUrl: photoUrl,
+        participantId: autocompleteData.id
+      }, getConfig())
+        .then(() =>  {
+          dispatch(setResetInfo(null))
+          navigate('/chats')
+        })
+        .catch(err => {
+          setDataError(true)
+          console.log(err)
+        })
+    } else {
+      axios.post(URL, {
+        title: data.title,
+        imgUrl: photoUrl,
+        participantId: participantId
+      }, getConfig())
+        .then(() =>  {
+          dispatch(setResetInfo(null))
+          navigate('/chats')
+        })
+        .catch(err => {
+          setDataError(true)
+          console.log(err)
+        })
+    }
+  }
 
   const cancelCreate = () => {
     reset({
@@ -108,26 +134,12 @@ const NewChat = () => {
     navigate('/')
   }
 
-  const submit = data => {
-    const URL = `${API_URL}/conversations/`
-    axios.post(URL, data, getConfig())
-      .then(res =>  {
-        console.log(res.data)
-        dispatch(setResetInfo(null))
-      })
-      .catch(err => {
-        setDataError(true)
-        console.log(err)
-      })
-  }
-
   if (!isUploading) {
     return (
       <PageContainer>
-        <section>
-          {
-            !autocompleteData &&
-            <form className='default_questionary' onSubmit={handleSubmit(submit)}>
+        {
+          !autocompleteData &&
+          <form className='default_questionary' onSubmit={handleSubmit(submit)}>
             <h3>Ingrese los datos para crear un nuevo Chat:</h3>
             <img style={{borderRadius: "50%"}} src={chatCreate} alt="" />
             {
@@ -169,10 +181,10 @@ const NewChat = () => {
               <button>Crear</button>
             </div>
           </form>
-          }
-          {
-            autocompleteData &&
-            <form className='default_questionary' onSubmit={handleSubmit(submit)}>
+        }
+        {
+          autocompleteData &&
+          <form className='default_questionary' onSubmit={handleSubmit(submit)}>
             <h3>Estás iniciando un nuevo chat con:</h3>
             <img src={autocompleteData.profileImage} alt="" />
             <h1>{autocompleteData.firstName} {autocompleteData.lastName}</h1>
@@ -196,22 +208,21 @@ const NewChat = () => {
                   <p>Cargando imagen<span>.</span></p>
                 </div>
               )
-            }            
-            {
-              dataError &&
-              <p className='error_message'>Algunos datos son incorrectos!</p>
             }
             <div>
               <label htmlFor='title-input'>Crea un título</label>
               <input type='text' id='title-input' {...register("title")} />
             </div>
+            {
+              dataError &&
+              <p className='error_message'>Algunos datos son incorrectos!</p>
+            }
             <div className="buttons">
               <button onClick={cancelCreate} type="button">Cancelar</button>
               <button>Crear</button>
             </div>
           </form>
-          }
-        </section>
+        }
       </PageContainer>
     )
   } else {

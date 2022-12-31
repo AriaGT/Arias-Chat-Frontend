@@ -50,7 +50,7 @@ const sideNavBar = ({ setModalVisibility, setModalSelected }) => {
           {
             myUser &&
             <li>
-              <a onClick={goToCloseSession} className='logout'>
+              <a onClick={goToCloseSession} id='logout'>
                 <i className="fa-solid fa-right-from-bracket"></i>
                 <span className='nav-item'>Cerrar Sesión</span> 
               </a>

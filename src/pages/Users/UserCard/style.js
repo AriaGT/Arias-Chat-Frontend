@@ -3,45 +3,40 @@ import styled from "styled-components";
 
 export const UserCardContainer = styled.div`
   cursor: pointer;
-  display: inline-block;
-  width: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 160px;
   text-align: center;
-  transition: filter .2s, transform .2s;
+  transition: filter .2s;
+  margin: 10px;
   :hover {
-    transform: scale(1.04);
+    filter: brightness(.9);
   }
-  :active {
-    filter: brightness(.75);
-    transform: scale(.96);
+  @media (min-width: 520px) {
+    max-width: 200px;
+    .text-container {
+      margin: 20px 0px 10px 0px;
+      height: 280px;
+    }
   }
   .img-container {
-    height: 230px;
-    width: 200px;
+    aspect-ratio: 1;
+    width: 90%;
+    max-width: 200px;
     overflow: hidden;
     border-radius: 0px 0px 20px 20px;
-    display: inline-block;
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    position: relative;
     img {
-      height: 250px;
-      margin: -35px 0px 0px -70px;
-      width: 100%;
       position: absolute;
-      right: 0;
-    }
-    .inner-skew {
-      display: inline-block;
-      border-radius: 20px;
-      overflow: hidden;
-      padding: 0px;
-      font-size: 0px;
-      margin: 30px 0px 0px 0px;
-      background: #c8c2c2;
-      height: 250px;
-      width: 200px;
-      position: relative;
+      left: 0;
+      width: 100%;
     }
   }
   .text-container {
+    height: 228px;
+    width: 100%;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
     padding: 120px 20px 20px 20px;
     border-radius: 20px;
@@ -50,16 +45,33 @@ export const UserCardContainer = styled.div`
     line-height: 19px;
     font-size: 14px;
     h3 {
-      margin: 20px 0px 10px 0px;
       color: #40e0d0;
-      font-size: 18px;
+      font-size: 13px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      @media (min-width: 520px) {
+      font-size: 16px;
+      }
     }
-    p {
-      color: #bbb;
-      font-size: 12px;
-      span {
-        color: white;
-        font-size: 14px;
+    div {
+      width: 90%;
+      p {
+        color: #bbb;
+        font-size: 9px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        span {
+          color: white;
+          font-size: 11px;
+        }
+        @media (min-width: 520px) {
+        font-size: 12px;
+        span {
+          font-size: 14px;
+        }
+        }
       }
     }
   }

@@ -11,7 +11,7 @@ export const SideNavbarContainer = styled.section`
     z-index: 5;
     top: 0;
     bottom: 0;
-    height: 100vh;
+    height: 100%;
     width: 90px;
     overflow: hidden;
     transition: width .2s linear;
@@ -65,11 +65,14 @@ export const SideNavbarContainer = styled.section`
       top: 8px;
       margin-left: 10px;
     }
-    
-    .logout {
+    #logout {
       position: absolute;
-      bottom: 0;
-      margin-bottom: 10px;
+      bottom: 10px;
+      background: none;
+      :hover {
+      background-color: #f55555;
+      color: white;
+      }
     }
   }
 `

@@ -1,9 +1,9 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import getConfig from '../../utils/getConfig'
 import UserCard from './UserCard/UserCard'
 import { PageContainer } from '../../AppStyles'
 import { useSelector } from 'react-redux'
+import { UsersContainer } from './styles'
 
 const API_URL = 'https://api-arias-chat.onrender.com/api/v1'
 
@@ -51,17 +51,16 @@ const Users = () => {
 
   return (
     <PageContainer>
-      <section>
-        <h2>Buscar personas:</h2>
-        <form className='default_questionary'>
-          <div>
-            <input className='full_input' onChange={searchPeople} type="text" />
-          </div>
-        </form>
-        {
-          searchUserResults.length === 0 && <h4>Recomendados:</h4>
-        }
-        <div className='users-container'>
+      <h2>Buscar personas:</h2>
+      <form className='default_questionary'>
+        <div>
+          <input className='full_input' onChange={searchPeople} type="text" />
+        </div>
+      </form>
+      {
+        searchUserResults.length === 0 && <h4>Recomendados:</h4>
+      }
+      <UsersContainer>
         {
           searchUserResults.map(result => (
             <UserCard
@@ -89,8 +88,7 @@ const Users = () => {
             />
           ))
         }
-        </div>
-      </section>
+      </UsersContainer>
     </PageContainer>
   )
 }

@@ -25,4 +25,7 @@ export const ChatCardContainer = styled.div`
     aspect-ratio: 1 !important;
     border-radius: 50% !important;
   }
+  p {
+    color: #bbb;
+  }
 `

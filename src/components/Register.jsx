@@ -64,7 +64,7 @@ const Register = ({setModalVisibility, setModalSelected}) => {
     }
     const URL = `${API_URL}/users/`
     axios.post(URL, data)
-      .then(res =>  {
+      .then(res => {
         setModalSelected('login')
         console.log(res)
       })

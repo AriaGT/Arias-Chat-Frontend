@@ -2,6 +2,9 @@ import styled from "styled-components";
 
 
 export const HomePageContainer = styled.main`
+  @media (max-width: 1080px) {
+    padding-bottom: 100px !important;
+  }
   width: 90%;
   justify-self: center;
   display: flex;
