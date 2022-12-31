@@ -22,31 +22,43 @@ export const ChatContainer = styled.section`
       border-radius: 50%;
     }
   }
-  section {
-    width: 100%;
+  .messages_container {
     height: calc(100vh - 140px);
+    position: relative;
     display: flex;
-    flex-direction: column;
-    padding: 20px;
-    align-items: flex-start;
-    div {
-      margin: 5px 0;
-      background-color: white;
-      color: #222;
-      padding: 5px 10px;
-      border-radius: 10px;
-      max-width: 360px;
-      p {
-        font-size: 12px;
-        text-align: end;
-        margin-top: 5px;
+    section {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      .messages_list {
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: 0 20px;
+        align-items: flex-start;
+        div {
+          margin: 5px 0;
+          background-color: white;
+          color: #222;
+          padding: 5px 10px;
+          border-radius: 10px;
+          max-width: 360px;
+          p {
+            font-size: 12px;
+            text-align: end;
+            margin-top: 5px;
+          }
+        }
+        .my_message {
+          align-self: flex-end;
+          background-color: #40e0d0;
+          color: #222;
+          text-align: end;
+        }
       }
-    }
-    .my_message {
-      align-self: flex-end;
-      background-color: #40e0d0;
-      color: #222;
-      text-align: end;
     }
   }
   .message_bar {
