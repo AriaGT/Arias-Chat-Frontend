@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import getConfig from '../../utils/getConfig'
@@ -28,25 +28,35 @@ const Chat = ({chat}) => {
     })
   }
 
+  const messages_container = useRef(null)
+
+  const scrollToBottoms = () => {
+    if (messages_container.current) {
+      messages_container.current.scrollTop = messages_container.current.scrollHeight
+    }
+  }
+
+  useEffect(() => {
+    scrollToBottoms()
+  }, [chat])
+
   return (
     <ChatContainer>
       <header>
         <img src={chat.imageUrl || emptyChatImg} alt="" />
         <h1>{chat.title}</h1>
       </header>
-      <div className='messages_container'>
-        <section>
-          <div className='messages_list'>
-            {
-              chat.messages.map(message => (
-                <div key={message.id} className={message.userId === myId ? 'my_message' : undefined}>
-                  <span><img src="" alt="" />{message.message}</span>
-                  <p>Envíado a las {message.updatedAt.substring(11, 16)}</p>
-                </div>
-              ))
-            }
-          </div>
-        </section>
+      <div className='messages_container' ref={messages_container}>
+        <div className='messages_list' >
+          {
+            chat.messages.map(message => (
+              <div key={message.id} className={message.userId === myId ? 'my_message' : undefined}>
+                <span><img src="" alt="" />{message.message}</span>
+                <p>Envíado a las {message.updatedAt.substring(11, 16)}</p>
+              </div>
+            ))
+          }
+        </div>
       </div>
       <form className='message_bar' onSubmit={handleSubmit(submit)}>
         <input type="text" placeholder='Mensaje' {...register("message")} />
